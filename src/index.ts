@@ -1,21 +1,22 @@
 import { ExtendedClient } from "./structs/ExtendedClient"
+import config from "./config.json"
 
+import fs  from "fs"	
+import path from "path"
 export * from "colors";
 
-const client = new ExtendedClient();
 
-client.start();
 
-export { client }
+// const client = new ExtendedClient();
+// client.start();
 
-client.on("ready", () => {
-    console.log("Bot Online".green)
-})
+// export { client }
 
-client.on("messageCreate", (message) => {
-    if (message.author.id == client.user?.id) return;
-    
-    message.reply({
-        content: `Ola ${message.author.username}`
+
+fs.readdirSync(path.join(__dirname,"comands")).forEach(local => {
+    fs.readdirSync(path.join(__dirname,"comands", local))
+    .filter(fileName => fileName.endsWith(".ts") || fileName.endsWith(".js"))
+    .forEach(filename => {
+        console.log(filename)
     })
 })
